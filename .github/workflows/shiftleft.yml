@@ -6,8 +6,6 @@ name: ShiftLeft
 
 on:
   pull_request:
-  workflow_dispatch:
-  push:
 
 jobs:
   NextGen-Static-Analysis:
@@ -49,4 +47,4 @@ jobs:
             --github-token=${{ secrets.GITHUB_TOKEN }}
       env:
         SHIFTLEFT_ACCESS_TOKEN: ${{ secrets.SHIFTLEFT_ACCESS_TOKEN }}  
-      if: needs.pr-check.outputs.number != null
+      if: github.event_name == 'pull_request'
