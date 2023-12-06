@@ -43,8 +43,6 @@ jobs:
     - name: Validate Build Rules
       run: |
         ${GITHUB_WORKSPACE}/sl check-analysis --v2 --app qwiet-js-demo-sharecare \
-            --branch '${{ github.event.pull_request.base.ref }}' \
-            --target 'tag.branch=${{ github.head_ref || steps.extract_branch.outputs.branch }}' \        
             --github-pr-number=${{github.event.number}} \
             --github-pr-user=${{ github.repository_owner }} \
             --github-pr-repo=${{ github.event.repository.name }} \
