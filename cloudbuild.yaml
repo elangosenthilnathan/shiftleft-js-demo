@@ -1,0 +1,29 @@
+steps:
+
+#Download Qwiet SL Binary
+- name: 'bash'
+  script: |
+    curl https://cdn.shiftleft.io/download/sl > ./sl && chmod a+rx ./sl
+
+# Run sl analyze
+- name: 'bash'
+  script: |
+      ./sl analyze --strict --wait \
+          --app <QWIET_APP_NAME> \
+          --tag branch=$BRANCH_NAME \
+          .
+  env:
+    - 'SHIFTLEFT_ACCESS_TOKEN=${_MY_SECRET_KEY}'
+
+# Run sl check-analysis
+- name: 'bash'
+  script: |
+      ./sl check-analysis \
+          --app <QWIET_APP_NAME> \
+          --config shiftleft.yml \
+          --v2 \
+  env:
+    - 'SHIFTLEFT_ACCESS_TOKEN=${_MY_SECRET_KEY}'
+    
+options:
+  automapSubstitutions: true
