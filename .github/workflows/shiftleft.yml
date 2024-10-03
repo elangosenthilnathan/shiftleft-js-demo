@@ -18,14 +18,16 @@ jobs:
     - name: Download ShiftLeft CLI
       run: |
         curl https://cdn.shiftleft.io/download/sl > ${GITHUB_WORKSPACE}/sl && chmod a+rx ${GITHUB_WORKSPACE}/sl
+        export SHIFTLEFT_JAVA_OPTS="-Xmx4g"
+        export SL_CPG_OPTS="-J-Xms72g -J-Xmx4g"
 
     - name: preZero Static Analysis
       run: |
         ${GITHUB_WORKSPACE}/sl --version
         ${GITHUB_WORKSPACE}/sl analyze --strict --wait \
-          --app shiftleft-js-demo-clone \
+          --app shiftleft-js-demo \
           --tag branch=${{ github.head_ref }} \
-          --js --container 18fgsa/s3-resource .
+          --js .
       env:
         SHIFTLEFT_ACCESS_TOKEN: ${{ secrets.SHIFTLEFT_ACCESS_TOKEN }}
         SHIFTLEFT_API_HOST: www.shiftleft.io
