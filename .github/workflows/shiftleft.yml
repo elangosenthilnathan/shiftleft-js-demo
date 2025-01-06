@@ -26,7 +26,7 @@ jobs:
     - name: Run sl analyze
       shell: bash
       run: |
-        ./sl analyze --verbose --app newtest --wait .
+        ./sl analyze --verbose --app slonroot --wait .
       env:
         SHIFTLEFT_ACCESS_TOKEN: ${{ secrets.SHIFTLEFT_ACCESS_TOKEN }}
 
