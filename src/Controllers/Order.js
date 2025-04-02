@@ -8,11 +8,22 @@ class Order {
     // Hash Key
     return key;
   }
-  encryptData(secretText) {
-    // Weak encryption
-    const desCipher = crypto.createCipheriv('des', encryptionKey);
-    return desCipher.update(secretText, 'utf8', 'hex');
-  }
+encryptData(secretText) {
+    // Sanitize input
+    const sanitizedText = sanitize(secretText);
+
+    // Generate a secure random key
+    const encryptionKey = crypto.randomBytes(32);
+
+    // Use AES for encryption
+    const aesCipher = crypto.createCipheriv('aes-256-cbc', encryptionKey);
+
+    // Encrypt and return
+    let encrypted = aesCipher.update(sanitizedText, 'utf8', 'hex');
+    encrypted += aesCipher.final('hex');
+    return encrypted;
+}
+
 
   decryptData(encryptedText) {
     const desCipher = crypto.createDecipheriv('des', encryptionKey);
